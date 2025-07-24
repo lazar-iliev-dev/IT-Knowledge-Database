@@ -1,0 +1,25 @@
+#JetBrean
+.idea
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# .NET
+bin/
+obj/
+**/*.db
+*.user
+*.vs/
+
+# EF Migrations
+backend/Migrations/
+
+# Node.js
+frontend/node_modules/
+frontend/build/
+
+# VSCode
+.vscode/
+
+# Mac
+.DS_Store
