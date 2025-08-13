@@ -10,11 +10,13 @@
 - **Schneller Zugriff**: Sofortige Verfügbarkeit relevanter Lösungen für wiederkehrende IT-Störungen.
 - **Proof-of-Concept & Showcase**: Demonstration technischer Eigeninitiative und Teamorientierung.
 - **Kostenfrei & lokal**: Keine Azure/AWS-Kosten, rein lokal betreibbar.
+
 -EN-
 - **Structure instead of Excel chaos**: Replacement of confusing Excel lists with a searchable SQLite database.
 - **Fast access**: Immediate availability of relevant solutions for recurring IT problems.
 - **Proof of concept & showcase**: Demonstration of technical initiative and team orientation.
 - **Free & local**: No Azure/AWS costs, can be operated purely locally.
+
 ---
 
 ## 🧱 Architekturüberblick (Architecture overview)
@@ -106,7 +108,8 @@ KnowledgeDatabase/
 - **Benutzerverwaltung**: Rollenbasiertes System (Editor, Viewer)
 - **Power Automate Demo**: Beispiel-Flow (Artikel-Publishing → Teams-Notification)
 - **Export-Funktion**: Artikel als PDF oder CSV herunterladen
-- EN -
+
+-EN-
 - **Tags & categories**: Filter and categorize articles
 - **Markdown editor**: Rich text editing and preview
 - **User management**: Role-based system (editor, viewer)
