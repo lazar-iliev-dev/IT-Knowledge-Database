@@ -103,6 +103,42 @@ KnowledgeDatabase/
 
 ---
 
+## 🔗 Architekturdiagramm (Architecture Diagram)
+
+-DE-
+Überblick der System-Architektur: Browser → Nginx Reverse Proxy → Frontend (React) & Backend (ASP.NET Core) → SQLite Datenbank
+
+-EN-
+System architecture overview: Browser → Nginx reverse proxy → Frontend (React) & Backend (ASP.NET Core) → SQLite database
+
+```text
+                   +--------------------+
+                   |      Browser       |
+                   |  http://localhost  |
+                   +---------+----------+
+                             |
+                             v
+                   +--------------------+
+                   |       Nginx        |
+                   | Reverse Proxy (8080)|
+                   +----+-----------+---+
+                        |           |
+        / (Frontend)    |           |   /api/... (Backend)
+                        |           |
+                        v           v
+          +-----------------+   +------------------+
+          |   React (Vite)  |   |  ASP.NET Core 8  |
+          |  Frontend-App   |   |   Web API        |
+          +-----------------+   +---------+--------+
+                                          |
+                                          v
+                                +------------------+
+                                |     SQLite DB    |
+                                | (dateibasiert)   |
+                                +------------------+
+
+---
+
 ## ✨ Geplante Erweiterungen (Planned expansions)
 
 -DE-
