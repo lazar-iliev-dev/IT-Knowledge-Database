@@ -36,11 +36,12 @@
   - Detailansicht der ausgewählten Lösung
 - **Styles**: Inline / CSS-Module – minimal gehalten, einfach erweiterbar
 
-### 🐳 Container (optional)
+### 🐳 Container
 - **Docker & Docker Compose**:
-  - `backend/`-Service mit ASP.NET Core
-  - `frontend/`-Service mit Vite Dev Server
-  - Gemeinsamer Netzwerkzugriff via Docker Compose
+  - Dockerfile in backend/ und frontend/
+  - Reverse Proxy via Nginx für gemeinsame URL
+    - `http://localhost:8080/` → Frontend
+    - `(http://localhost:8080/api/...` → Backend (weitergeleitet an ASP.NET))
 
 ---
 
@@ -88,14 +89,53 @@ KnowledgeDatabase/
 │   ├── Data/              # DbContext & Migrations
 │   ├── Models/            # Domänenklassen (Article, User, ...)
 │   ├── Program.cs         # Middleware & Startup
-│   └── KnowledgeApi.csproj
+│   └── Dockerfile
 ├── frontend/              # React + Vite Projekt
 │   ├── src/               # Quellcode: App.jsx, Components...
-│   ├── public/            # statische Assets
+│   ├── public/            # Statische Assets
 │   ├── package.json
-│   └── vite.config.js
-├── docker-compose.yml     # Optionale Container-Konfiguration
+│   └── Dockerfile
+├── tools/                 # Hilfstools (z.B. nginx.conf, gitflow.sh)
+├── docker-compose.yml     # Multi-Container Setup
 └── README.md              # Dieses Dokument
+
+```
+
+---
+
+## 🔗 Architekturdiagramm (Architecture Diagram)
+
+-DE-
+Überblick der System-Architektur: Browser → Nginx Reverse Proxy → Frontend (React) & Backend (ASP.NET Core) → SQLite Datenbank
+
+-EN-
+System architecture overview: Browser → Nginx reverse proxy → Frontend (React) & Backend (ASP.NET Core) → SQLite database
+
+```text
+                   +--------------------+
+                   |      Browser       |
+                   |  http://localhost  |
+                   +---------+----------+
+                             |
+                             v
+                   +--------------------+
+                   |       Nginx        |
+                   | Reverse Proxy (8080)|
+                   +----+-----------+---+
+                        |           |
+        / (Frontend)    |           |   /api/... (Backend)
+                        |           |
+                        v           v
+          +-----------------+   +------------------+
+          |   React (Vite)  |   |  ASP.NET Core 8  |
+          |  Frontend-App   |   |   Web API        |
+          +-----------------+   +---------+--------+
+                                          |
+                                          v
+                                +------------------+
+                                |     SQLite DB    |
+                                | (dateibasiert)   |
+                                +------------------+
 ```
 
 ---
