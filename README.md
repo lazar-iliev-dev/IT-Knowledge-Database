@@ -89,14 +89,16 @@ KnowledgeDatabase/
 │   ├── Data/              # DbContext & Migrations
 │   ├── Models/            # Domänenklassen (Article, User, ...)
 │   ├── Program.cs         # Middleware & Startup
-│   └── KnowledgeApi.csproj
+│   └── Dockerfile
 ├── frontend/              # React + Vite Projekt
 │   ├── src/               # Quellcode: App.jsx, Components...
-│   ├── public/            # statische Assets
+│   ├── public/            # Statische Assets
 │   ├── package.json
-│   └── vite.config.js
-├── docker-compose.yml     # Optionale Container-Konfiguration
+│   └── Dockerfile
+├── tools/                 # Hilfstools (z.B. nginx.conf, gitflow.sh)
+├── docker-compose.yml     # Multi-Container Setup
 └── README.md              # Dieses Dokument
+
 ```
 
 ---
