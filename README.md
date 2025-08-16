@@ -136,6 +136,7 @@ System architecture overview: Browser → Nginx reverse proxy → Frontend (Reac
                                 |     SQLite DB    |
                                 | (dateibasiert)   |
                                 +------------------+
+```
 
 ---
 
