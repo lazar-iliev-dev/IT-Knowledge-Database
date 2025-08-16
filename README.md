@@ -36,7 +36,7 @@
   - Detailansicht der ausgewählten Lösung
 - **Styles**: Inline / CSS-Module – minimal gehalten, einfach erweiterbar
 
-### 🐳 Container (optional)
+### 🐳 Container
 - **Docker & Docker Compose**:
   - `backend/`-Service mit ASP.NET Core
   - `frontend/`-Service mit Vite Dev Server
