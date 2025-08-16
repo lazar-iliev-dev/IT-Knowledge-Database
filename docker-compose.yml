@@ -1,12 +1,21 @@
-version: '3.8'
+version: "3.9"
 services:
   backend:
     build: ./backend
+    container_name: kb-backend
     ports:
-      - "5249:5249"
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+
   frontend:
     build: ./frontend
+    container_name: kb-frontend
     ports:
-      - "5173:5173"
-    depends_on:
-      - backend
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
