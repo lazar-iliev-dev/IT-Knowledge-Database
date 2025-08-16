@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5249:5249"
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
