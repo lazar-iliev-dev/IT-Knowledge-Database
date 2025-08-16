@@ -38,9 +38,10 @@
 
 ### 🐳 Container
 - **Docker & Docker Compose**:
-  - `backend/`-Service mit ASP.NET Core
-  - `frontend/`-Service mit Vite Dev Server
-  - Gemeinsamer Netzwerkzugriff via Docker Compose
+  - Dockerfile in backend/ und frontend/
+  - Reverse Proxy via Nginx für gemeinsame URL
+    - `http://localhost:8080/` → Frontend
+    - `(http://localhost:8080/api/...` → Backend (weitergeleitet an ASP.NET))
 
 ---
 
