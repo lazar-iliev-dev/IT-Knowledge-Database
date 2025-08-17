@@ -1,51 +1,66 @@
-import { useState, useEffect } from 'react';
+// frontend/src/App.jsx
+import { useEffect, useState } from "react";
+import ArticleForm from "./components/ArticleForm";
+import ArticleList from "./components/ArticleList";
 
-export default function App() {
+function App() {
   const [articles, setArticles] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [q, setQ] = useState('');
+  const [editing, setEditing] = useState(null);
+
+  const loadArticles = () => {
+    fetch("http://localhost:5249/api/articles")
+      .then((res) => res.json())
+      .then(setArticles)
+      .catch((err) => console.error("Fehler beim Laden:", err));
+  };
 
   useEffect(() => {
-    fetch('http://localhost:5249/api/articles')
-      .then(r => r.json())
-      .then(setArticles);
+    loadArticles();
   }, []);
 
-  const search = async () => {
-    const res = await fetch(`http://localhost:5249/api/articles?search=${encodeURIComponent(q)}`);
-    setArticles(await res.json());
-    setSelected(null);
+  const handleNewArticle = async (article) => {
+    await fetch("http://localhost:5249/api/articles", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(article),
+    });
+    loadArticles();
+  };
+
+  const handleUpdateArticle = async (article) => {
+    await fetch(`http://localhost:5249/api/articles/${article.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(article),
+    });
+    setEditing(null);
+    loadArticles();
+  };
+
+  const handleDeleteArticle = async (id) => {
+    await fetch(`http://localhost:5249/api/articles/${id}`, {
+      method: "DELETE",
+    });
+    loadArticles();
   };
 
   return (
-    <main style={{ maxWidth: 600, margin: '2rem auto', fontFamily: 'sans-serif' }}>
-      <h1>IT-Support Wissensdatenbank</h1>
-      <input
-        value={q}
-        onChange={e => setQ(e.target.value)}
-        placeholder="Suche..."
-        style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">📚 IT Knowledge Base</h1>
+
+      <ArticleForm
+        onSubmit={editing ? handleUpdateArticle : handleNewArticle}
+        editing={editing}
+        cancelEdit={() => setEditing(null)}
       />
-      <button onClick={search} style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}>
-        Suche
-      </button>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {articles.map(a => (
-          <li
-            key={a.id}
-            onClick={() => setSelected(a)}
-            style={{ padding: '0.5rem 0', borderBottom: '1px solid #ddd', cursor: 'pointer' }}
-          >
-            {a.title}
-          </li>
-        ))}
-      </ul>
-      {selected && (
-        <article style={{ marginTop: '2rem' }}>
-          <h2>{selected.title}</h2>
-          <p style={{ whiteSpace: 'pre-wrap' }}>{selected.content}</p>
-        </article>
-      )}
-    </main>
+
+      <ArticleList
+        articles={articles}
+        onEdit={(a) => setEditing(a)}
+        onDelete={handleDeleteArticle}
+      />
+    </div>
   );
 }
+
+export default App;
