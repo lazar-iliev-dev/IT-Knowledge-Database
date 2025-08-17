@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeDatabase", "KnowledgeDatabase\KnowledgeDatabase.csproj", "{620437CE-925D-4340-A89D-25C08A562B83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeDatabase", "KnowledgeDatabase.csproj", "{620437CE-925D-4340-A89D-25C08A562B83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
