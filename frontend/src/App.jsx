@@ -1,17 +1,19 @@
-// frontend/src/App.jsx
 import { useEffect, useState } from "react";
 import ArticleForm from "./components/ArticleForm";
 import ArticleList from "./components/ArticleList";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [articles, setArticles] = useState([]);
   const [editing, setEditing] = useState(null);
 
-  const loadArticles = () => {
-    fetch("http://localhost:5249/api/articles")
-      .then((res) => res.json())
-      .then(setArticles)
-      .catch((err) => console.error("Fehler beim Laden:", err));
+  const loadArticles = async (filters = {}) => {
+    let url = "http://localhost:5249/api/articles";
+    const params = new URLSearchParams(filters).toString();
+    if (params) url += `?${params}`;
+
+    const res = await fetch(url);
+    setArticles(await res.json());
   };
 
   useEffect(() => {
@@ -45,8 +47,10 @@ function App() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">📚 IT Knowledge Base</h1>
+    <div className="max-w-3xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">📚 IT Knowledge Base</h1>
+
+      <SearchBar onSearch={loadArticles} />
 
       <ArticleForm
         onSubmit={editing ? handleUpdateArticle : handleNewArticle}
@@ -64,3 +68,7 @@ function App() {
 }
 
 export default App;
+// This is the main application component that manages the state and renders the UI.
+// It includes the article form, article list, and search bar components.
+// It handles loading articles, creating, updating, and deleting articles via API calls.
+// The application uses React hooks for state management and side effects.
