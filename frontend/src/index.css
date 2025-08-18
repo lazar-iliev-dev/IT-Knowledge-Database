@@ -1,3 +1,7 @@
+@import "tailwindcss";
+/* This file is used to define global styles for the application.
+   It includes basic styles for typography, links, buttons, and media queries
+   for light and dark color schemes. */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

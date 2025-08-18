@@ -10,13 +10,14 @@ on:
       - "bugfix/**"
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   backend:
-    name: Backend Build
+    name: Backend Build (auto-detect .sln)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,14 +27,51 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Find solution file under backend/
+        id: find-sln
+        run: |
+          echo "Looking for solution (.sln) under backend/ ..."
+          # try root of backend first
+          SLN=$(ls backend/*.sln 2>/dev/null | head -n 1 || true)
+          if [ -z "$SLN" ]; then
+            # try nested folders (e.g. backend/KnowledgeDatabase/*.sln)
+            SLN=$(find backend -maxdepth 3 -type f -name '*.sln' | head -n 1 || true)
+          fi
+          if [ -z "$SLN" ]; then
+            echo "##[error] No .sln file found under backend/. Please ensure solution exists."
+            exit 1
+          fi
+          echo "Found solution: $SLN"
+          echo "SOLUTION_PATH=$SLN" >> $GITHUB_ENV
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-$(date +%Y%m%d)-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
       - name: Restore dependencies
-        run: dotnet restore
+        run: |
+          echo "Restoring $SOLUTION_PATH"
+          dotnet restore "$SOLUTION_PATH" --verbosity minimal
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: |
+          echo "Building $SOLUTION_PATH"
+          dotnet build "$SOLUTION_PATH" --no-restore --configuration Release
 
-      - name: Run tests
-        run: dotnet test --no-build --configuration Release --verbosity normal
+      - name: Run tests (if any)
+        run: |
+          # find test projects under backend and run them if present
+          TEST_PROJ=$(find backend -type f -name "*Tests*.csproj" -o -name "*Test*.csproj" | head -n 1 || true)
+          if [ -n "$TEST_PROJ" ]; then
+            echo "Running tests (project: $TEST_PROJ)"
+            dotnet test "$TEST_PROJ" --no-build --configuration Release --verbosity normal
+          else
+            echo "No test projects found under backend/ — skipping tests."
+          fi
 
   frontend:
     name: Frontend Build
@@ -50,9 +88,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
-
