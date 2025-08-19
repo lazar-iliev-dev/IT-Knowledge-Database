@@ -74,4 +74,10 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-   
+
+# SQLite runtime files
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
