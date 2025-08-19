@@ -74,9 +74,6 @@ frontend/build/
 *.sqlite-wal
 *.sqlite-shm
 
-# Optional: Dumps, falls du sie lokal erzeugst
-db_dump_*.sql
-
 # =========================
 # Sonstiges
 # =========================
