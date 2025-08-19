@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Database + Dependency Injection
-builder.Services.AddDbContext<KnowledgeContext>(options =>
-    options.UseSqlite("Data Source=knowledge.db"));
+    builder.Services.AddDbContext<KnowledgeContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // CORS for React-Frontend
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>

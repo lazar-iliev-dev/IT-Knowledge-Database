@@ -12,23 +12,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sqlite3
+      - name: Install SQLite
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
 
       - name: Restore .NET dependencies
-        run: dotnet restore
+        run: dotnet restore backend/KnowledgeDatabase.csproj
 
       - name: Build project
-        run: dotnet build --configuration Release
+        run: dotnet build backend/KnowledgeDatabase.csproj --configuration Release
 
       - name: Apply EF Core migrations (create DB)
-        run: dotnet ef database update --project backend/YourProject.csproj --startup-project backend/YourProject.csproj
+        run: dotnet ef database update --project backend/KnowledgeDatabase.csproj --startup-project backend/KnowledgeDatabase.csproj
 
       - name: Dump SQLite DB
         run: |
-          DB_FILE="backend/knowledge.db"
+          DB_FILE="backend/knowledge.db" # <--- anpassen falls Datei anders heißt
           if [ -f "$DB_FILE" ]; then
             DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
             sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"
