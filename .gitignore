@@ -1,22 +1,10 @@
-#JetBrean
-.idea
-/packages/
-riderModule.iml
+# =========================
+# IDE / Editor
+# =========================
+# JetBrains
+.idea/
+*.iml
 /_ReSharper.Caches/
-
-# .NET
-bin/
-obj/
-**/*.db
-*.user
-*.vs/
-
-# EF Migrations
-backend/Migrations/
-
-# Node.js
-frontend/node_modules/
-frontend/build/
 
 # VSCode
 .vscode/
@@ -24,24 +12,30 @@ frontend/build/
 # Mac
 .DS_Store
 
+# =========================
+# .NET / ASP.NET Core
+# =========================
+bin/
+obj/
+*.user
+*.vs/
+
+# EF Core Migrations
+# Wenn du die Migrationen versionierst, nicht ignorieren
+# backend/Migrations/
+
+# =========================
+# Python
+# =========================
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
-# C extensions
 *.so
 
 # Distribution / packaging
 bin/
 build/
-develop-eggs/
 dist/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -53,24 +47,40 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 .tox/
 .coverage
-.cache
+.cache/
 nosetests.xml
 coverage.xml
 
 # Translations
 *.mo
 
-# Mr Developer
+# Django / Sphinx
+*.log
+docs/_build/
+
+# =========================
+# Node.js
+# =========================
+frontend/node_modules/
+frontend/build/
+
+# =========================
+# SQLite runtime files
+# =========================
+# Wichtige: Datenbank-Dateien lokal, nicht ins Repo
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+
+# Optional: Dumps, falls du sie lokal erzeugst
+db_dump_*.sql
+
+# =========================
+# Sonstiges
+# =========================
 .mr.developer.cfg
 .project
 .pydevproject
-
-# Rope
 .ropeproject
-
-# Django stuff:
-*.log
-*.pot
-
-# Sphinx documentation
-docs/_build/

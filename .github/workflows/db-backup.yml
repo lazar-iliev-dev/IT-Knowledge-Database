@@ -1,0 +1,29 @@
+name: DB Backup
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SQLite
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
+
+      - name: Create DB dump
+        run: |
+          DB_FILE="backend/knowledge.db" 
+          if [ -f "$DB_FILE" ]; then
+            DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
+            sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"
+            echo "DB dump created: $DUMP_FILE"
+          else
+            echo "Database file not found: $DB_FILE"
+            exit 1
+          fi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-dump
+          path: db_dump_*.sql
