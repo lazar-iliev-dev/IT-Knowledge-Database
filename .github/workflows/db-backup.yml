@@ -26,7 +26,6 @@ jobs:
 
       - name: Dump SQLite DB
         run: |
-          DB_FILE="backend/knowledge.db" # <--- anpassen falls Datei anders heißt
           if [ -f "$DB_FILE" ]; then
             DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
             sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"
