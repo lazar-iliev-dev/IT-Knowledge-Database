@@ -33,7 +33,8 @@ jobs:
 
       - name: Dump SQLite DB
         run: |
-          # ACHTUNG: Dateiname muss mit deinem DbContext übereinstimmen!
+          # ACHTUNG: File name must match your DbContext!
+
           DB_FILE="backend/KnowledgeDatabase.db"
 
           if [ -f "$DB_FILE" ]; then
