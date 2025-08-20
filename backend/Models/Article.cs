@@ -13,7 +13,7 @@ namespace KnowledgeApi.Models
         public ArticleCategory Category { get; set; }
 
         // Navigation property zu relationalen Tags
-        public List<ArticleTag> ArticleTags { get; set; } = new();
+        public List<Tag> ArticleTags { get; set; } = new();
         
         // Bequeme List<string> für Code / UI
         [NotMapped]
@@ -25,7 +25,7 @@ namespace KnowledgeApi.Models
                 ArticleTags.Clear();
                 if (value != null)
                 {
-                    ArticleTags.AddRange(value.Select(description => new ArticleTag { Description = description }));
+                    ArticleTags.AddRange(value.Select(description => new Tag { Description = description }));
                 }
             }
         }
