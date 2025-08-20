@@ -10,10 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install SQLite
         run: sudo apt-get update && sudo apt-get install -y sqlite3
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Add .NET tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: Restore .NET dependencies
         run: dotnet restore backend/KnowledgeDatabase.csproj
@@ -26,6 +33,9 @@ jobs:
 
       - name: Dump SQLite DB
         run: |
+          # ACHTUNG: File name must match your DbContext!
+          DB_FILE="backend/KnowledgeDatabase.db"
+
           if [ -f "$DB_FILE" ]; then
             DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
             sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"
