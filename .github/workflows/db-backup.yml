@@ -21,12 +21,18 @@ jobs:
       - name: Build project
         run: dotnet build backend/KnowledgeDatabase.csproj --configuration Release
 
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef --version 8.*
+      
+      - name: Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
       - name: Apply EF Core migrations (create DB)
         run: dotnet ef database update --project backend/KnowledgeDatabase.csproj --startup-project backend/KnowledgeDatabase.csproj
 
       - name: Dump SQLite DB
         run: |
-          DB_FILE="backend/knowledge.db" # <--- anpassen falls Datei anders heißt
+          DB_FILE="backend/KnowledgeDatabase.db"
           if [ -f "$DB_FILE" ]; then
             DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
             sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"
