@@ -74,11 +74,10 @@ namespace KnowledgeApi.Services
                     {
                         if (!string.IsNullOrWhiteSpace(tagDescription))
                         {
-                            article.ArticleTags.Add(new ArticleTags
+                            article.ArticleTags.Add(new Tag
                             {
                                 Id = Guid.NewGuid(),
-                                Description = tagDescription.Trim(),
-                                ArticleId = article.Id
+                                Description = tagDescription.Trim()
                             });
                         }
                     }
@@ -121,11 +120,10 @@ namespace KnowledgeApi.Services
                     {
                         if (!string.IsNullOrWhiteSpace(tagDescription))
                         {
-                            article.ArticleTags.Add(new ArticleTags
+                            article.ArticleTags.Add(new Tag
                             {
                                 Id = Guid.NewGuid(),
-                                Description = tagDescription.Trim(),
-                                ArticleId = article.Id
+                                Description = tagDescription.Trim()
                             });
                         }
                     }
