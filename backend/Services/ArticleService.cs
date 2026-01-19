@@ -74,7 +74,7 @@ namespace KnowledgeApi.Services
                     {
                         if (!string.IsNullOrWhiteSpace(tagDescription))
                         {
-                            article.ArticleTags.Add(new ArticleTag
+                            article.ArticleTags.Add(new ArticleTags
                             {
                                 Id = Guid.NewGuid(),
                                 Description = tagDescription.Trim(),
@@ -121,7 +121,7 @@ namespace KnowledgeApi.Services
                     {
                         if (!string.IsNullOrWhiteSpace(tagDescription))
                         {
-                            article.ArticleTags.Add(new ArticleTag
+                            article.ArticleTags.Add(new ArticleTags
                             {
                                 Id = Guid.NewGuid(),
                                 Description = tagDescription.Trim(),
@@ -176,4 +176,3 @@ namespace KnowledgeApi.Services
         };
     }
 }
-
