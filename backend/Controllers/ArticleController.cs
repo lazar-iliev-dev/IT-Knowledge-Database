@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using KnowledgeApi.Data;
 using KnowledgeApi.DTOs;
 using KnowledgeApi.Models;
+using KnowledgetApi.Models.Enums;
 using KnowledgeApi.Services;
 using Microsoft.EntityFrameworkCore;
 
