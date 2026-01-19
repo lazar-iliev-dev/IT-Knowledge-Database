@@ -1,5 +1,3 @@
-name: DB Backup
-
 on:
   push:
     branches: [ main ]
@@ -10,17 +8,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
       - name: Install SQLite
         run: sudo apt-get update && sudo apt-get install -y sqlite3
 
-      - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef
-
-      - name: Add .NET tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+      - name: (optional) Run duplicate-compile diagnostic
+        if: ${{ always() }}
+        run: |
+          # Ensure the diagnostic script is executable if present
+          if [ -f tools/find_duplicate_compile.sh ]; then
+            chmod +x tools/find_duplicate_compile.sh
+            ./tools/find_duplicate_compile.sh
+          else
+            echo "tools/find_duplicate_compile.sh not found — skipping diagnostic."
+          fi
 
       - name: Restore .NET dependencies
         run: dotnet restore backend/KnowledgeDatabase.csproj
@@ -28,15 +35,18 @@ jobs:
       - name: Build project
         run: dotnet build backend/KnowledgeDatabase.csproj --configuration Release
 
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef --version 8.*
+
+      - name: Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
       - name: Apply EF Core migrations (create DB)
         run: dotnet ef database update --project backend/KnowledgeDatabase.csproj --startup-project backend/KnowledgeDatabase.csproj
 
       - name: Dump SQLite DB
         run: |
-          # ACHTUNG: File name must match your DbContext!
-
           DB_FILE="backend/KnowledgeDatabase.db"
-
           if [ -f "$DB_FILE" ]; then
             DUMP_FILE="db_dump_$(date +%F_%H%M).sql"
             sqlite3 "$DB_FILE" .dump > "$DUMP_FILE"

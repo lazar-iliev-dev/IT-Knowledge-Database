@@ -2,10 +2,12 @@ namespace KnowledgeApi.Models.Enums
 {
     public enum ArticleCategory
     {
-        Hardware,
-        Software,
-        Netzwerk,
-        Sicherheit,
-        Sonstiges
+        Programming,
+        Database,
+        DevOps,
+        Cloud,
+        WebDevelopment,
+        Security,
+        Other
     }
 }
