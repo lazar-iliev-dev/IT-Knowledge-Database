@@ -1,6 +1,7 @@
 using KnowledgeApi.Data;
 using KnowledgeApi.DTOs;
 using KnowledgeApi.Models;
+using KnowledgeApi.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace KnowledgeApi.Services
