@@ -1,4 +1,30 @@
 # 📚 IT Support Knowledge Base
+# ⚠️ PROJECT EVOLVED
+
+> **This project has been modernized and integrated into the [Enterprise Operations Platform](https://github.com/lazar-iliev-dev/Enterprise-Operations-Platform).**
+>
+> **Migration improvements:**
+> - ✅ Upgraded from .NET 8 → .NET 9
+> - ✅ Migrated from SQLite → PostgreSQL (containerized)
+> - ✅ Added to Aspire microservices orchestration
+> - ✅ Integrated with Task Management Service for unified workflows
+> - ✅ Enhanced observability (OpenTelemetry, Grafana)
+>
+> 👉 **See the modern implementation: [Enterprise Operations Platform](https://github.com/lazar-iliev-dev/Enterprise-Operations-Platform)**
+
+---
+
+## 📜 Legacy Version (v1.0 - Archived)
+
+*This documentation reflects the original standalone version before architectural modernization.*
+
+---
+
+# 📚 IT Support Knowledge Base
+
+**Entwicklung einer lokalen, schlanken Wissensdatenbank für den IT-Support** zur effizienten Bearbeitung häufig auftretender Störungen und Tickets – komplett lokal, ohne Cloud-Abhängigkeiten.
+
+---
 
 **Entwicklung einer lokalen, schlanken Wissensdatenbank für den IT-Support** zur effizienten Bearbeitung häufig auftretender Störungen und Tickets – komplett lokal, ohne Cloud-Abhängigkeiten.
 
